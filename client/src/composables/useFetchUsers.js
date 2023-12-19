@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { useFetch } from "@vueuse/core";
 
-const BASE_URL = "http://localhost:3030/api/";
+const BASE_URL = "https://fake-users-server.onrender.com/api/";
 
 export function useFetchUsers(debouncedSeed, selectedRegion, errorValue, page) {
   const url = computed(() => {

@@ -40,7 +40,7 @@ const isDialogOpen = ref(false);
 const isFormValid = ref(false);
 
 const url = computed(() => {
-  const BASE_URL = "http://localhost:3030/download-csv/";
+  const BASE_URL = "https://fake-users-server.onrender.com/download-csv/";
   const params = new URLSearchParams({
     location: selectedRegion.value,
     error: errorValue.value,
