@@ -4,6 +4,7 @@
     :items="users"
     hover
     no-filter
+    no-data-text=""
     density="compact"
     item-height="100px"
     fixed-header
