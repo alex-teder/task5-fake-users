@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { useFetch } from "@vueuse/core";
 
-const BASE_URL = "https://inquisitive-swan-97dcdd.netlify.app/api/";
+const BASE_URL = "http://localhost:3030/api/";
 
 export function useFetchUsers(debouncedSeed, selectedRegion, errorValue, page) {
   const url = computed(() => {

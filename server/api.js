@@ -1,6 +1,5 @@
 import { createReadStream, unlink } from "node:fs";
 import express from "express";
-import serverless from "serverless-http";
 import cors from "cors";
 import { createObjectCsvWriter } from "csv-writer";
 import { getFakes } from "./modules/fake-users.js";
@@ -10,6 +9,7 @@ import { parseParams } from "./modules/parse-params.js";
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.static("../client/dist/"));
 
 const ITEMS_PER_PAGE = 75;
 const DOWNLOAD_QTY_LIMIT = 9999;
@@ -88,5 +88,3 @@ app.listen(PORT, () => {
   console.clear();
   console.log("App is listening on port", PORT);
 });
-
-export const handler = serverless(app);
