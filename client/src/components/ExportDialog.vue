@@ -20,7 +20,12 @@
 
         <v-card-actions class="px-6 pb-2 d-flex justify-space-between">
           <v-btn @click="isDialogOpen = false">Cancel</v-btn>
-          <v-btn type="submit" color="primary" append-icon="mdi-open-in-new">
+          <v-btn
+            :loading="isAwaitingDownload"
+            type="submit"
+            color="primary"
+            append-icon="mdi-open-in-new"
+          >
             Download
           </v-btn>
         </v-card-actions>
@@ -30,7 +35,7 @@
 </template>
 
 <script setup>
-import { ref, computed, toRefs } from "vue";
+import { ref, computed, toRefs, onMounted, onBeforeUnmount } from "vue";
 
 const props = defineProps(["selectedRegion", "seed", "errorValue"]);
 const { selectedRegion, seed, errorValue } = toRefs(props);
@@ -38,6 +43,7 @@ const { selectedRegion, seed, errorValue } = toRefs(props);
 const qty = ref(0);
 const isDialogOpen = ref(false);
 const isFormValid = ref(false);
+const isAwaitingDownload = ref(false);
 
 const url = computed(() => {
   const BASE_URL = "https://fake-users-server.onrender.com/download-csv/";
@@ -54,6 +60,7 @@ const url = computed(() => {
 
 const handleSubmit = async () => {
   if (!isFormValid.value) return;
+  isAwaitingDownload.value = true;
   const link = document.createElement("a");
   link.href = url.value;
   link.target = "_blank";
@@ -62,6 +69,20 @@ const handleSubmit = async () => {
   link.click();
   document.body.removeChild(link);
 };
+
+const handleWindowFocus = () => {
+  if (isAwaitingDownload.value) {
+    isAwaitingDownload.value = false;
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("focus", handleWindowFocus);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("focus", handleWindowFocus);
+});
 
 const validateNumber = (v) =>
   (parseInt(v) !== 0 && v.length < 5) || "Min: 1, Max: 9999";
