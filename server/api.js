@@ -51,7 +51,8 @@ app.get("/download-csv", async (req, res) => {
       seed,
       page: 0,
       errorValue,
-      itemsPerPage: qty,
+      itemsPerPage: ITEMS_PER_PAGE,
+      qty,
     });
 
     const FILENAME = "users.csv";

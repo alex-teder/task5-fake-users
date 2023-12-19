@@ -22,11 +22,11 @@ function getCitiesList(countryCode, minPopulation = 20000) {
   );
 }
 
-export function getFakes({ location, seed, page, errorValue = 0, itemsPerPage }) {
+export function getFakes({ location, seed, page, errorValue = 0, itemsPerPage, qty = null }) {
   if (!fakersMap[location]) throw new RequestError("Unknown location");
   const citiesList = getCitiesList(location);
   const seedForPage = seed + page;
-  return Array.from({ length: itemsPerPage }, (_, idx) => {
+  return Array.from({ length: qty || itemsPerPage }, (_, idx) => {
     const seedForItem = seedForPage * itemsPerPage + idx;
     const indexForItem = page * itemsPerPage + idx + 1;
     const fake = createSingleLocalizedFake({ location, citiesList, seed: seedForItem });
